@@ -9,7 +9,7 @@ class HaveToDoPage extends StatefulWidget {
 
 class _HaveToDoPageState extends State<HaveToDoPage> {
   List<String> todoList = [];
-
+  int which = 1; // if = 0 then have to do
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +51,13 @@ class _HaveToDoPageState extends State<HaveToDoPage> {
           // "push"で新規画面に遷移
           // リスト追加画面から渡される値を受け取る
           final newListText = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) {
-              // 遷移先の画面としてリスト追加画面を指定
-              return const TodoAddPage();
-            }),
+            MaterialPageRoute(
+              settings: RouteSettings(arguments: which),
+              builder: (context) {
+                // 遷移先の画面としてリスト追加画面を指定
+                return TodoAddPage(which: which);
+              },
+            ),
           );
           if (newListText != null) {
             // キャンセルした場合は newListText が null となるので注意

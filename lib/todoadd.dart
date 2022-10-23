@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TodoAddPage extends StatefulWidget {
-  const TodoAddPage({super.key});
+  //受け取り用変数
+  final int which;
+  //コンストラクタ
+  const TodoAddPage({super.key, required this.which});
   @override
   State<TodoAddPage> createState() => _TodoAddPageState();
 }
@@ -9,7 +12,7 @@ class TodoAddPage extends StatefulWidget {
 // リスト追加画面用Widget
 class _TodoAddPageState extends State<TodoAddPage> {
   String _text = '';
-
+  int which = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

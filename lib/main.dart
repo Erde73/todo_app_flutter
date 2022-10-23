@@ -7,10 +7,12 @@ import 'package:todo_app/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-void main() async {
+Future<void> main() async {
+  //Initialize firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Run app
   runApp(const MyTodoApp());
 }
 
@@ -19,17 +21,19 @@ class MyTodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //Not tagged with debug
       title: 'Todo Management App', //App name
+      //Theme settings
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      initialRoute: '/home', // Define routes below
+      initialRoute: '/login',
+      // Define routes below
       routes: {
         '/home': (context) => const HomePage(),
-        '/login': (context) => const LoginPage(),
+        '/login': (context) => LoginPage(),
         '/havetodo': (context) => const HaveToDoPage(),
         '/wanttodo': (context) => const WantToDoPage(),
-        '/todoadd': (context) => const TodoAddPage(),
+        '/todoadd': (context) => const TodoAddPage(which: 0),
       },
     );
   }
