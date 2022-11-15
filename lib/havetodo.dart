@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/todoadd.dart';
+import 'package:todo_app/wanttodo.dart';
+
+class HaveToDoPageArguments {
+  final String userId;
+  HaveToDoPageArguments({required this.userId});
+}
 
 class HaveToDoPage extends StatefulWidget {
   const HaveToDoPage({super.key});
@@ -8,10 +14,12 @@ class HaveToDoPage extends StatefulWidget {
 }
 
 class _HaveToDoPageState extends State<HaveToDoPage> {
-  List<String> todoList = [];
-  int which = 1; // if = 0 then have to do
+  List<String> todoList = ["研究", "イノチャレバックエンド", "確率解析ゼミ 復習"];
+  int which = 0; // which = 0 then have to do, which = 1 then want to do
   @override
   Widget build(BuildContext context) {
+    final userId =
+        ModalRoute.of(context)!.settings.arguments as HaveToDoPageArguments;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -19,7 +27,10 @@ class _HaveToDoPageState extends State<HaveToDoPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.change_circle),
-            onPressed: () => {Navigator.pushNamed(context, '/wanttodo')},
+            onPressed: () => {
+              Navigator.pushNamed(context, '/wanttodo',
+                  arguments: WantToDoPageArguments(userId: userId.userId))
+            },
           ),
         ],
         leading: IconButton(
@@ -38,19 +49,11 @@ class _HaveToDoPageState extends State<HaveToDoPage> {
           );
         },
       ),
-      // body: ListView(
-      //   children: <Widget>[
-      //     _haveToDoItem(context, "数理最適化"),
-      //     _haveToDoItem(context, "時系列分析"),
-      //     _haveToDoItem(context, "シェアスタ"),
-      //   ],
-      // ),
       floatingActionButton: FloatingActionButton(
-        // *** 追加する部分 ***
         onPressed: () async {
           // "push"で新規画面に遷移
-          // リスト追加画面から渡される値を受け取る
           final newListText = await Navigator.of(context).push(
+            // リスト追加画面から渡される値を受け取る
             MaterialPageRoute(
               settings: RouteSettings(arguments: which),
               builder: (context) {
